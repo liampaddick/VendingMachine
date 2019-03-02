@@ -26,7 +26,7 @@ namespace VendingMachine
                 Console.WriteLine("1 - Add Credit");
                 Console.WriteLine("2 - Get info on an item");
                 Console.WriteLine("3 - Dispense an Item");
-                Console.WriteLine("4 - Add new / Restock item");
+                Console.WriteLine("4 - Add new / Add more of an existing item");
                 Console.WriteLine("5 - Remove item / All item");
                 Console.WriteLine("6 - Shut down machine");
                 choice = int.Parse(Console.ReadLine());
@@ -42,6 +42,11 @@ namespace VendingMachine
                     case 3:
                         break;
                     case 4:
+                        string nameToAdd = Console.ReadLine();
+                        string categoryToAdd = Console.ReadLine();
+                        float priceToAdd = float.Parse(Console.ReadLine());
+                        Item itemToAdd = new Item(nameToAdd, categoryToAdd, priceToAdd);
+                        vendingMachineInventory = addItem(itemToAdd, vendingMachineInventory);
                         break;
                     case 5:
                         break;
@@ -63,7 +68,12 @@ namespace VendingMachine
             return currentCredit;
         }
 
-        
+        static List<Item> addItem(Item itemToAdd, List<Item> currentItemList)
+        {
+            List<Item> listToReturn = currentItemList;
+            listToReturn.Add(itemToAdd);
+            return listToReturn;
+        }
     }
 
     abstract class Item // base class that food and drink will inherit from
