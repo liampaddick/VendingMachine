@@ -14,6 +14,7 @@ namespace VendingMachine
             float credit = 0.0f;
 
             List<Item> vendingMachineInventory = new List<Item>();
+            int choice = -1;
 
             Console.WriteLine("This will simulate a vending machine");
 
@@ -28,7 +29,26 @@ namespace VendingMachine
                 Console.WriteLine("4 - Add new / Restock item");
                 Console.WriteLine("5 - Remove item / All item");
                 Console.WriteLine("6 - Shut down machine");
-                Console.ReadLine();
+                choice = int.Parse(Console.ReadLine());
+
+                switch(choice)
+                {
+                    case 1: // add credit
+                        Console.WriteLine("How much credit would you like to add?");
+                        credit = addCredit(credit, float.Parse(Console.ReadLine()));
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                }
+
             }
         }
 
@@ -43,6 +63,8 @@ namespace VendingMachine
             currentCredit = currentCredit - creditToSubtract;
             return currentCredit;
         }
+
+        
     }
 
     abstract class Item // base class that food and drink will inherit from
