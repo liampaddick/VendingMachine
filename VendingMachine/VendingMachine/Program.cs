@@ -15,12 +15,6 @@ namespace VendingMachine
 
             List<Item> vendingMachineInventory = new List<Item>();
 
-            Snack tempSnack = new Snack("Chocolate", 0.7f, 100);
-
-            vendingMachineInventory.Add(tempSnack);
-
-            Console.WriteLine("ID: " + vendingMachineInventory[0].GetItemID() + " Category: " + vendingMachineInventory[0].GetCategory() + " Price: " + vendingMachineInventory[0].GetPrice() + " Weight: " + vendingMachineInventory[0].GetVolumeOrWeight());
-
             Console.WriteLine("This will simulate a vending machine");
 
             while (vendorOn)
