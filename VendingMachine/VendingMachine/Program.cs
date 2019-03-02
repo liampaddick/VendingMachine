@@ -48,40 +48,8 @@ namespace VendingMachine
                         Console.WriteLine("3 - Other (currently unuseable)");
                         int addChoice = int.Parse(Console.ReadLine());
 
-                        if (addChoice == 1)
-                        {
-                            Console.WriteLine("Name of product to add: ");
-                            string nameToAdd = Console.ReadLine();
-                            Console.WriteLine("Category of product to add: ");
-                            string categoryToAdd = Console.ReadLine();
-                            Console.WriteLine("Price of product to add: ");
-                            float priceToAdd = float.Parse(Console.ReadLine());
-                            Console.WriteLine("Weight(g) of product to add: ");
-                            int weightToAdd = int.Parse(Console.ReadLine());
-                            Snack itemToAdd = new Snack(nameToAdd, categoryToAdd, priceToAdd, weightToAdd);
-                            vendingMachineInventory = addItem(itemToAdd, vendingMachineInventory);
-                        }
-                        else if (addChoice == 2)
-                        {
-                            Console.WriteLine("Name of product to add: ");
-                            string nameToAdd = Console.ReadLine();
-                            Console.WriteLine("Category of product to add: ");
-                            string categoryToAdd = Console.ReadLine();
-                            Console.WriteLine("Price of product to add: ");
-                            float priceToAdd = float.Parse(Console.ReadLine());
-                            Console.WriteLine("Capacity(ml) of product to add: ");
-                            int capacityToAdd = int.Parse(Console.ReadLine());
-                            Drink itemToAdd = new Drink(nameToAdd, categoryToAdd, priceToAdd, capacityToAdd);
-                            vendingMachineInventory = addItem(itemToAdd, vendingMachineInventory);
-                        }
-                        else if (addChoice == 3)
-                        {
-                            // not in use currently
-                        }
-                        else
-                        {
-                            //incompatible input
-                        }
+                        addItem(vendingMachineInventory, addChoice);
+
                         break;
                     case 5:
                         break;
@@ -110,11 +78,48 @@ namespace VendingMachine
             return currentCredit;
         }
 
-        static List<Item> addItem(Item itemToAdd, List<Item> currentItemList)
+        static List<Item> addItem(List<Item> currentInventory, int choice)
         {
-            List<Item> listToReturn = currentItemList;
-            listToReturn.Add(itemToAdd);
-            return listToReturn;
+            List<Item> listToReturn = currentInventory;
+
+            if (choice == 1)
+            {
+                Console.WriteLine("Name of product to add: ");
+                string nameToAdd = Console.ReadLine();
+                Console.WriteLine("Category of product to add: ");
+                string categoryToAdd = Console.ReadLine();
+                Console.WriteLine("Price of product to add: ");
+                float priceToAdd = float.Parse(Console.ReadLine());
+                Console.WriteLine("Weight(g) of product to add: ");
+                int weightToAdd = int.Parse(Console.ReadLine());
+                Snack itemToAdd = new Snack(nameToAdd, categoryToAdd, priceToAdd, weightToAdd);
+                listToReturn.Add(itemToAdd);
+                return listToReturn;
+            }
+            else if (choice == 2)
+            {
+                Console.WriteLine("Name of product to add: ");
+                string nameToAdd = Console.ReadLine();
+                Console.WriteLine("Category of product to add: ");
+                string categoryToAdd = Console.ReadLine();
+                Console.WriteLine("Price of product to add: ");
+                float priceToAdd = float.Parse(Console.ReadLine());
+                Console.WriteLine("Capacity(ml) of product to add: ");
+                int capacityToAdd = int.Parse(Console.ReadLine());
+                Drink itemToAdd = new Drink(nameToAdd, categoryToAdd, priceToAdd, capacityToAdd);
+                listToReturn.Add(itemToAdd);
+                return listToReturn;
+            }
+            else if (choice == 3)
+            {
+                // not in use currently
+                return currentInventory;
+            }
+            else
+            {
+                //incompatible input
+                return currentInventory;
+            }
         }
     }
 
