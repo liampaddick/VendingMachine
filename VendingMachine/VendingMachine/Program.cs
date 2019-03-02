@@ -13,11 +13,15 @@ namespace VendingMachine
             bool vendorOn = true;
             float credit = 0.0f;
 
+            List<Item> vendingMachineInventory = new List<Item>();
+
+            Snack tempSnack = new Snack("Chocolate", 0.7f, 100);
+
+            vendingMachineInventory.Add(tempSnack);
+
+            Console.WriteLine("ID: " + vendingMachineInventory[0].GetItemID() + " Category: " + vendingMachineInventory[0].GetCategory() + " Price: " + vendingMachineInventory[0].GetPrice() + " Weight: " + vendingMachineInventory[0].GetVolumeOrWeight());
+
             Console.WriteLine("This will simulate a vending machine");
-
-            Dog tempDog = new Dog();
-
-            tempDog.GetAge();
 
             while (vendorOn)
             {
@@ -35,12 +39,21 @@ namespace VendingMachine
         }
     }
 
-    class Item // base class that food and drink will inherit from
+    abstract class Item // base class that food and drink will inherit from
     {
-        public int itemID;
-        public string category;
-        public float price;
-        public string nutritionalInfo;
+        static int itemID;
+        string category;
+        float price;
+
+        static int itemCount;
+
+        public Item(string pCategory, float pPrice)
+        {
+            itemID = itemCount;
+            category = pCategory;
+            price = pPrice;
+            itemCount++;
+        }
 
         public int GetItemID()
         {
@@ -54,72 +67,42 @@ namespace VendingMachine
         {
             return price;
         }
-        public string GetNutritionalInfo()
-        {
-            return nutritionalInfo;
-        }
+
+        public abstract float GetVolumeOrWeight();
     }
 
     class Snack : Item
     {
         float weight;
 
-        float GetWeight()
+        public Snack(string pCategory, float pPrice, int pWeight):base (pCategory, pPrice)
+        {
+            weight = pWeight;
+        }
+
+        public float GetWeight()
         {
             return weight;
         }
-        
-    }
 
+        public override float GetVolumeOrWeight()
+        {
+            return weight;
+        }
+
+    }
     class Drink : Item
     {
         float capacity;
 
-        float GetCapacity()
+        public Drink(string pCategory, float pPrice, int pCapacity):base (pCategory, pPrice)
+        {
+            capacity = pCapacity;
+        }
+
+        public override float GetVolumeOrWeight()
         {
             return capacity;
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    class Animal
-    {
-        string name;
-        int age;
-        float happiness;
-
-        public void PrintBaseValues()
-        {
-            Console.WriteLine(name + " "  + age + " " + happiness);
-        }
-
-        public int GetAge()
-        {
-            return age;
-        }
-    }
-
-    class Dog : Animal
-    {
-        public int spotCount;
-        public void Bark ()
-        {
-            Console.WriteLine("Woof");
-        }
-
-        public int DogGetAge()
-        {
-            return (GetAge());
         }
     }
 }
