@@ -36,7 +36,6 @@ namespace VendingMachine
                     case 1: // add credit
                         Console.WriteLine("How much credit would you like to add?");
                         credit = addCredit(credit, float.Parse(Console.ReadLine()));
-                        credit = subtractCredit(credit, 25);
                         break;
                     case 2:
                         break;
