@@ -42,16 +42,58 @@ namespace VendingMachine
                     case 3:
                         break;
                     case 4:
-                        string nameToAdd = Console.ReadLine();
-                        string categoryToAdd = Console.ReadLine();
-                        float priceToAdd = float.Parse(Console.ReadLine());
-                        Item itemToAdd = new Item(nameToAdd, categoryToAdd, priceToAdd);
-                        vendingMachineInventory = addItem(itemToAdd, vendingMachineInventory);
+                        Console.WriteLine("What would you like to add?");
+                        Console.WriteLine("1 - Snack");
+                        Console.WriteLine("2 - Drink");
+                        Console.WriteLine("3 - Other (currently unuseable)");
+                        int addChoice = int.Parse(Console.ReadLine());
+
+                        if (addChoice == 1)
+                        {
+                            Console.WriteLine("Name of product to add: ");
+                            string nameToAdd = Console.ReadLine();
+                            Console.WriteLine("Category of product to add: ");
+                            string categoryToAdd = Console.ReadLine();
+                            Console.WriteLine("Price of product to add: ");
+                            float priceToAdd = float.Parse(Console.ReadLine());
+                            Console.WriteLine("Weight(g) of product to add: ");
+                            int weightToAdd = int.Parse(Console.ReadLine());
+                            Snack itemToAdd = new Snack(nameToAdd, categoryToAdd, priceToAdd, weightToAdd);
+                            vendingMachineInventory = addItem(itemToAdd, vendingMachineInventory);
+                        }
+                        else if (addChoice == 2)
+                        {
+                            Console.WriteLine("Name of product to add: ");
+                            string nameToAdd = Console.ReadLine();
+                            Console.WriteLine("Category of product to add: ");
+                            string categoryToAdd = Console.ReadLine();
+                            Console.WriteLine("Price of product to add: ");
+                            float priceToAdd = float.Parse(Console.ReadLine());
+                            Console.WriteLine("Capacity(ml) of product to add: ");
+                            int capacityToAdd = int.Parse(Console.ReadLine());
+                            Drink itemToAdd = new Drink(nameToAdd, categoryToAdd, priceToAdd, capacityToAdd);
+                            vendingMachineInventory = addItem(itemToAdd, vendingMachineInventory);
+                        }
+                        else if (addChoice == 3)
+                        {
+                            // not in use currently
+                        }
+                        else
+                        {
+                            //incompatible input
+                        }
                         break;
                     case 5:
                         break;
                     case 6:
                         break;
+                }
+
+                Console.WriteLine("");
+
+                for (int i = 0; i < vendingMachineInventory.Count(); i++)
+                {
+                    Console.WriteLine("Item Category: " + vendingMachineInventory[i].GetCategory());
                 }
 
             }
