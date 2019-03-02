@@ -57,7 +57,6 @@ namespace VendingMachine
             currentCredit = currentCredit + creditToAdd;
             return currentCredit;
         }
-
         static float subtractCredit(float currentCredit, float creditToSubtract)
         {
             currentCredit = currentCredit - creditToSubtract;
@@ -70,14 +69,16 @@ namespace VendingMachine
     abstract class Item // base class that food and drink will inherit from
     {
         static int itemID;
+        string name;
         string category;
         float price;
 
         static int itemCount;
 
-        public Item(string pCategory, float pPrice)
+        public Item(string pName, string pCategory, float pPrice)
         {
             itemID = itemCount;
+            name = pName;
             category = pCategory;
             price = pPrice;
             itemCount++;
@@ -103,7 +104,7 @@ namespace VendingMachine
     {
         float weight;
 
-        public Snack(string pCategory, float pPrice, int pWeight):base (pCategory, pPrice)
+        public Snack(string pName, string pCategory, float pPrice, int pWeight):base (pName, pCategory, pPrice)
         {
             weight = pWeight;
         }
@@ -123,7 +124,7 @@ namespace VendingMachine
     {
         float capacity;
 
-        public Drink(string pCategory, float pPrice, int pCapacity):base (pCategory, pPrice)
+        public Drink(string pName, string pCategory, float pPrice, int pCapacity):base (pName, pCategory, pPrice)
         {
             capacity = pCapacity;
         }
