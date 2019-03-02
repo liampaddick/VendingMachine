@@ -31,6 +31,18 @@ namespace VendingMachine
                 Console.ReadLine();
             }
         }
+
+        static float addCredit(float currentCredit, float creditToAdd)
+        {
+            currentCredit = currentCredit + creditToAdd;
+            return currentCredit;
+        }
+
+        static float subtractCredit(float currentCredit, float creditToSubtract)
+        {
+            currentCredit = currentCredit - creditToSubtract;
+            return currentCredit;
+        }
     }
 
     abstract class Item // base class that food and drink will inherit from
