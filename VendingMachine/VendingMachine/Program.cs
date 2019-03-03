@@ -34,6 +34,7 @@ namespace VendingMachine
                         Console.WriteLine("Please enter the name of the item you wish to dispense: ");
                         string dispenseChoice = Console.ReadLine();
                         DecreaseQuantityOfItem(vendingMachineInventory, dispenseChoice); //this will use IDs once ID bug has been fixed.
+                        credit = DecreaseCredit(credit, vendingMachineInventory, dispenseChoice);
                         break;
                     case 4:
                         Console.WriteLine("What would you like to add?");
@@ -74,12 +75,12 @@ namespace VendingMachine
             return int.Parse(Console.ReadLine());
         }
 
-        static List<Item>DecreaseQuantityOfItem(List<Item> currentInventory, string nameToDecrease) //this will use IDs once ID bug has been fixed.
+        static List<Item>DecreaseQuantityOfItem(List<Item> currentInventory, string dispenseChoice) //this will use IDs once ID bug has been fixed.
         {
             List <Item> listToReturn = currentInventory;
             for (int i = 0; i < listToReturn.Count(); i++)
             {
-                if (listToReturn[i].GetName() == nameToDecrease)
+                if (listToReturn[i].GetName() == dispenseChoice)
                 {
                     if (listToReturn[i].GetQuantity() >= 1) // decrease by 1 if this is true
                     {
@@ -93,6 +94,28 @@ namespace VendingMachine
                 }
             }
             return listToReturn;
+        }
+        static float DecreaseCredit(float currentCredit, List<Item> currentInventory, string dispenseChoice)
+        {
+            float tempCredit = currentCredit;
+            for (int i = 0; i < currentInventory.Count(); i++)
+            {
+                if (currentInventory[i].GetName() == dispenseChoice)
+                {
+                    if (tempCredit >= currentInventory[i].GetPrice())
+                    {
+                        tempCredit = tempCredit - currentInventory[i].GetPrice();
+                        return tempCredit;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Not enough credit. Please pick another item.");
+                        return tempCredit;
+                    }
+                }
+            }
+            Console.WriteLine("That choice doesn't match anything in the machine.");
+            return tempCredit;
         }
 
         static float addCredit(float currentCredit, float creditToAdd)
