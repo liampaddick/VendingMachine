@@ -31,6 +31,9 @@ namespace VendingMachine
                     case 2:
                         break;
                     case 3:
+                        Console.WriteLine("Please enter the name of the item you wish to dispense: ");
+                        string dispenseChoice = Console.ReadLine();
+                        DecreaseQuantityOfItem(vendingMachineInventory, dispenseChoice); //this will use IDs once ID bug has been fixed.
                         break;
                     case 4:
                         Console.WriteLine("What would you like to add?");
@@ -52,7 +55,7 @@ namespace VendingMachine
                 //debug to show items in vending machine
                 for (int i = 0; i < vendingMachineInventory.Count(); i++)
                 {
-                    Console.WriteLine("Item ID: " + vendingMachineInventory[i].GetItemID() + "Item Name: " + vendingMachineInventory[i].GetName());
+                    Console.WriteLine("Item ID: " + vendingMachineInventory[i].GetItemID() + " Item Name: " + vendingMachineInventory[i].GetName() + " Item quantity: " + vendingMachineInventory[i].GetQuantity());
                 }
             }
         }
@@ -69,6 +72,27 @@ namespace VendingMachine
             Console.WriteLine("5 - Remove item / All item");
             Console.WriteLine("6 - Shut down machine");
             return int.Parse(Console.ReadLine());
+        }
+
+        static List<Item>DecreaseQuantityOfItem(List<Item> currentInventory, string nameToDecrease) //this will use IDs once ID bug has been fixed.
+        {
+            List <Item> listToReturn = currentInventory;
+            for (int i = 0; i < listToReturn.Count(); i++)
+            {
+                if (listToReturn[i].GetName() == nameToDecrease)
+                {
+                    if (listToReturn[i].GetQuantity() >= 1) // decrease by 1 if this is true
+                    {
+                        listToReturn[i].SetQuantity(listToReturn[i].GetQuantity() - 1);
+                    }
+                    else if (listToReturn[i].GetQuantity() == 0)
+                    {
+                        //remove item from vending machine
+                        listToReturn.RemoveAt(i);
+                    }
+                }
+            }
+            return listToReturn;
         }
 
         static float addCredit(float currentCredit, float creditToAdd)
