@@ -20,16 +20,7 @@ namespace VendingMachine
 
             while (vendorOn)
             {
-                Console.WriteLine("Current Credit: " + credit);
-
-                Console.WriteLine("What would you like to do? ");
-                Console.WriteLine("1 - Add Credit");
-                Console.WriteLine("2 - Get info on an item");
-                Console.WriteLine("3 - Dispense an Item");
-                Console.WriteLine("4 - Add new / Add more of an existing item");
-                Console.WriteLine("5 - Remove item / All item");
-                Console.WriteLine("6 - Shut down machine");
-                choice = int.Parse(Console.ReadLine());
+                choice = GetChoice(credit);
 
                 switch(choice)
                 {
@@ -49,7 +40,6 @@ namespace VendingMachine
                         int addChoice = int.Parse(Console.ReadLine());
 
                         addItem(vendingMachineInventory, addChoice);
-
                         break;
                     case 5:
                         break;
@@ -59,11 +49,26 @@ namespace VendingMachine
 
                 Console.WriteLine("");
 
+                //debug to show items in vending machine
                 for (int i = 0; i < vendingMachineInventory.Count(); i++)
                 {
-                    Console.WriteLine("Item Category: " + vendingMachineInventory[i].GetCategory());
+                    Console.WriteLine("Item ID: " + vendingMachineInventory[i].GetItemID() + "Item Name: " + vendingMachineInventory[i].GetName());
                 }
             }
+        }
+
+        static int GetChoice(float currentCredit)
+        {
+            Console.WriteLine("Current Credit: " + currentCredit);
+
+            Console.WriteLine("What would you like to do? ");
+            Console.WriteLine("1 - Add Credit");
+            Console.WriteLine("2 - Get nutritional info on an item");
+            Console.WriteLine("3 - Dispense an Item");
+            Console.WriteLine("4 - Add new / Add more of an existing item");
+            Console.WriteLine("5 - Remove item / All item");
+            Console.WriteLine("6 - Shut down machine");
+            return int.Parse(Console.ReadLine());
         }
 
         static float addCredit(float currentCredit, float creditToAdd)
