@@ -28,15 +28,15 @@ namespace VendingMachine
                         Console.WriteLine("How much credit would you like to add?");
                         credit = addCredit(credit, float.Parse(Console.ReadLine()));
                         break;
-                    case 2:
+                    case 2: // get nutritional info
                         break;
-                    case 3:
+                    case 3: // dispense item
                         Console.WriteLine("Please enter the name of the item you wish to dispense: ");
                         string dispenseChoice = Console.ReadLine();
                         DecreaseQuantityOfItem(vendingMachineInventory, dispenseChoice); //this will use IDs once ID bug has been fixed.
                         credit = DecreaseCredit(credit, vendingMachineInventory, dispenseChoice);
                         break;
-                    case 4:
+                    case 4: // add item to vending machine
                         Console.WriteLine("What would you like to add?");
                         Console.WriteLine("1 - Snack");
                         Console.WriteLine("2 - Drink");
@@ -45,9 +45,33 @@ namespace VendingMachine
 
                         addItem(vendingMachineInventory, addChoice);
                         break;
-                    case 5:
+                    case 5: // remove an item / all items
+                        Console.WriteLine("Would you like to remove a single item or all items?");
+                        Console.WriteLine("1 - Single item");
+                        Console.WriteLine("2 - Delete all")
+                        int tempChoice = int.Parse(Console.ReadLine());
+                        if (tempChoice == 1)
+                        {
+                            // remove single item
+                            Console.WriteLine("Please enter the name of the item you wish to remove: "); // replace with id once id bug has been fixed
+                            string itemToRemove = Console.ReadLine();
+                            for (int i = 0; i < vendingMachineInventory.Count(); i++)
+                            {
+                                if (vendingMachineInventory[i].GetName() == itemToRemove)
+                                {
+                                    vendingMachineInventory.RemoveAt(i);
+                                }
+                            }
+
+                        }
+                        else if (tempChoice == 2)
+                        {
+                            //remove all items from inventory
+                            vendingMachineInventory.Clear();
+                            Console.WriteLine("All items have been removed.");
+                        }
                         break;
-                    case 6:
+                    case 6: // shut down the machine
                         break;
                 }
 
@@ -199,7 +223,7 @@ namespace VendingMachine
                     string categoryToAdd = Console.ReadLine();
                     Console.WriteLine("Price of product to add: ");
                     float priceToAdd = float.Parse(Console.ReadLine());
-                    Console.WriteLine("Weight(g) of product to add: ");
+                    Console.WriteLine("capacity(ml) of product to add: ");
                     int capacityToAdd = int.Parse(Console.ReadLine());
                     Console.WriteLine("How many are you putting in the machine to start with?");
                     int quantityToAdd = int.Parse(Console.ReadLine());
