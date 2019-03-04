@@ -29,6 +29,25 @@ namespace VendingMachine
                         credit = addCredit(credit, float.Parse(Console.ReadLine()));
                         break;
                     case 2: // get nutritional info
+                        Console.WriteLine("Enter the name of the item you would like to see nutritional info for: "); // will be changed to id once the bug has been fixed
+
+                        string itemToGetInfo = Console.ReadLine();
+                        for (int i = 0; i < vendingMachineInventory.Count(); i++)
+                        {
+                            if (vendingMachineInventory[i].GetName() == itemToGetInfo)
+                            {
+                                var nutritionalValues = vendingMachineInventory[i].GetNutritionalValues();
+                                float[] tempNutritionArray = nutritionalValues.Item2;
+                                Console.WriteLine("These values are " + nutritionalValues.Item1);
+                                Console.WriteLine("Calories: " + tempNutritionArray[0]); // calories
+                                Console.WriteLine("Fat: " + tempNutritionArray[1]); // fat
+                                Console.WriteLine("Carbohydrates: " + tempNutritionArray[2]); //carbs
+                                Console.WriteLine("Fibre: " + tempNutritionArray[3]); //fibre
+                                Console.WriteLine("Protein " + tempNutritionArray[4]); //protein
+                                Console.WriteLine("Salt " + tempNutritionArray[5]); //salt
+                            }
+                        }
+
                         break;
                     case 3: // dispense item
                         Console.WriteLine("Please enter the name of the item you wish to dispense: ");
@@ -40,7 +59,6 @@ namespace VendingMachine
                         Console.WriteLine("What would you like to add?");
                         Console.WriteLine("1 - Snack");
                         Console.WriteLine("2 - Drink");
-                        Console.WriteLine("3 - Other (currently unuseable)");
                         int addChoice = int.Parse(Console.ReadLine());
 
                         addItem(vendingMachineInventory, addChoice);
@@ -48,7 +66,7 @@ namespace VendingMachine
                     case 5: // remove an item / all items
                         Console.WriteLine("Would you like to remove a single item or all items?");
                         Console.WriteLine("1 - Single item");
-                        Console.WriteLine("2 - Delete all")
+                        Console.WriteLine("2 - Delete all");
                         int tempChoice = int.Parse(Console.ReadLine());
                         if (tempChoice == 1)
                         {
@@ -176,15 +194,45 @@ namespace VendingMachine
 
                 if (nameToCheck == null)
                 {
+                    //info needed for dispensing and invnetory management
                     Console.WriteLine("Category of product to add: ");
                     string categoryToAdd = Console.ReadLine();
+
                     Console.WriteLine("Price of product to add: ");
                     float priceToAdd = float.Parse(Console.ReadLine());
+
                     Console.WriteLine("Weight(g) of product to add: ");
                     int weightToAdd = int.Parse(Console.ReadLine());
+
                     Console.WriteLine("How many are you putting in the machine to start with?");
                     int quantityToAdd = int.Parse(Console.ReadLine());
-                    Snack itemToAdd = new Snack(nameToAdd, categoryToAdd, priceToAdd, weightToAdd, quantityToAdd);
+
+
+                    //info needed for nutritional information
+                    string perString;
+                    float calories, fat, carbohydrates, fibre, protein, salt;
+                    Console.WriteLine("Per portion statement: ");
+                    perString = Console.ReadLine();
+
+                    Console.WriteLine("How many calories are in this item? ");
+                    calories = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("How much fat is in the Item? ");
+                    fat = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("How many carbohydrates are there in this item?");
+                    carbohydrates = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("how much fibre is in this item? ");
+                    fibre = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("How much protein is in this item? ");
+                    protein = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("finally, how much salt is in the item? ");
+                    salt = float.Parse(Console.ReadLine());
+
+                    Snack itemToAdd = new Snack(nameToAdd, categoryToAdd, priceToAdd, weightToAdd, quantityToAdd, perString, calories, fat, carbohydrates, fibre, protein, salt);
                     listToReturn.Add(itemToAdd);
                     return listToReturn;
                 }
@@ -219,6 +267,7 @@ namespace VendingMachine
 
                 if (nameToCheck == null)
                 {
+                    //info needed for dispensing and inventory management
                     Console.WriteLine("Category of product to add: ");
                     string categoryToAdd = Console.ReadLine();
                     Console.WriteLine("Price of product to add: ");
@@ -227,7 +276,32 @@ namespace VendingMachine
                     int capacityToAdd = int.Parse(Console.ReadLine());
                     Console.WriteLine("How many are you putting in the machine to start with?");
                     int quantityToAdd = int.Parse(Console.ReadLine());
-                    Drink itemToAdd = new Drink(nameToAdd, categoryToAdd, priceToAdd, capacityToAdd, quantityToAdd);
+
+                    //info needed for nutritional info
+                    string perString;
+                    float calories, fat, carbohydrates, fibre, protein, salt;
+                    Console.WriteLine("Per portion statement: ");
+                    perString = Console.ReadLine();
+
+                    Console.WriteLine("How many calories are in this item? ");
+                    calories = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("How much fat is in the Item? ");
+                    fat = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("How many carbohydrates are there in this item?");
+                    carbohydrates = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("how much fibre is in this item? ");
+                    fibre = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("How much protein is in this item? ");
+                    protein = float.Parse(Console.ReadLine());
+
+                    Console.WriteLine("finally, how much salt is in the item? ");
+                    salt = float.Parse(Console.ReadLine());
+
+                    Drink itemToAdd = new Drink(nameToAdd, categoryToAdd, priceToAdd, capacityToAdd, quantityToAdd, perString, calories, fat, carbohydrates, fibre, protein, salt);
                     listToReturn.Add(itemToAdd);
                     return listToReturn;
                 }
@@ -254,11 +328,6 @@ namespace VendingMachine
                     return listToReturn;
                 }
             }
-            else if (choice == 3)
-            {
-                // not in use currently
-                return currentInventory;
-            }
             else
             {
                 //incompatible input
@@ -275,15 +344,35 @@ namespace VendingMachine
         float price;
         int quantity;
 
+        //default values are for testing
+        string perString;
+        float calories;
+        float fat;
+        float carbohydrates;
+        float fibre;
+        float protein;
+        float salt;
+
         static int itemCount;
 
-        public Item(string pName, string pCategory, float pPrice, int startingQuantity)
+        public Item(string pName, string pCategory, float pPrice, int startingQuantity, string pPerString, float pCalories, float pFat, float pCarbohydrates, float pFibre, float pProtein, float pSalt)
         {
+            //dispensing and inventory management info
             itemID = itemCount;
             name = pName;
             category = pCategory;
             price = pPrice;
             quantity = startingQuantity;
+
+            //nutritional info
+            perString = pPerString;
+            calories = pCalories;
+            fat = pFat;
+            carbohydrates = pCarbohydrates;
+            fibre = pFibre;
+            protein = pProtein;
+            salt = pSalt;
+
             itemCount++;
         }
 
@@ -312,6 +401,28 @@ namespace VendingMachine
             quantity = quantityToSet;
         }
 
+        public void SetNutritionalValues(string pPerString, float pCalories, float pFat, float pCarbohydrates, float pFibre, float pProtein, float pSalt)
+        {
+            perString = pPerString;
+            calories = pCalories;
+            fat = pFat;
+            carbohydrates = pCarbohydrates;
+            fibre = pFibre;
+            protein = pProtein;
+            salt = pSalt; 
+        }
+        public Tuple<string, float[]> GetNutritionalValues()
+        {
+            float[] nutritionArray = new float[6];
+            nutritionArray[0] = calories;
+            nutritionArray[1] = fat;
+            nutritionArray[2] = carbohydrates;
+            nutritionArray[3] = fibre;
+            nutritionArray[4] = protein;
+            nutritionArray[5] = salt;
+            var returnTuple = Tuple.Create(perString, nutritionArray);
+            return returnTuple;
+        }
 
         public abstract float GetVolumeOrWeight();
     }
@@ -320,7 +431,7 @@ namespace VendingMachine
     {
         float weight;
 
-        public Snack(string pName, string pCategory, float pPrice, int pWeight, int startingQuantity) :base (pName, pCategory, pPrice, startingQuantity)
+        public Snack(string pName, string pCategory, float pPrice, int pWeight, int startingQuantity, string pPerString, float pCalories, float pFat, float pCarbohydrates, float pFibre, float pProtein, float pSalt) :base (pName, pCategory, pPrice, startingQuantity, pPerString, pCalories, pFat, pCarbohydrates, pFibre, pProtein, pSalt)
         {
             weight = pWeight;
         }
@@ -340,7 +451,7 @@ namespace VendingMachine
     {
         float capacity;
 
-        public Drink(string pName, string pCategory, float pPrice, int pCapacity, int startingQuantity) :base (pName, pCategory, pPrice, startingQuantity)
+        public Drink(string pName, string pCategory, float pPrice, int pCapacity, int startingQuantity, string pPerString, float pCalories, float pFat, float pCarbohydrates, float pFibre, float pProtein, float pSalt) :base (pName, pCategory, pPrice, startingQuantity, pPerString, pCalories, pFat, pCarbohydrates, pFibre, pProtein, pSalt)
         {
             capacity = pCapacity;
         }
